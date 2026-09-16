@@ -6,9 +6,11 @@ transcript on
 
 # -----------------------------------------------------------------------------
 # Project settings: edit these when reusing the template.
+
+
 # TOP is the top-level design unit/module name (for example: tb), not a source filename.
-# -----------------------------------------------------------------------------
 set TOP       tb
+
 # RUN_TIME is passed to `run $RUN_TIME`; use `-all` (not `all`) to run until completion.
 set RUN_TIME  250ns
 
