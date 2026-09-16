@@ -19,7 +19,14 @@
 
 ## 创建项目
 
-安装 `eda` 函数后，在指定目录创建模板：
+直接通过 `irm` 下载引导脚本：
+
+```powershell
+$edaBootstrap = [scriptblock]::Create((irm https://raw.githubusercontent.com/yceachan/modelsim-workflow/main/bootstrap.ps1))
+& $edaBootstrap new .\my-rtl-project
+```
+
+如果已经把 `eda` 函数加入 PowerShell profile，则可直接在指定目录创建模板：
 
 ```powershell
 eda new .\my-rtl-project

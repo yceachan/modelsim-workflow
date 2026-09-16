@@ -54,7 +54,7 @@ $extractPath = Join-Path $tempRoot 'extract'
 
 try {
     New-Item -ItemType Directory -Path $tempRoot | Out-Null
-    Invoke-WebRequest -Uri $archiveUrl -OutFile $archivePath
+    Invoke-WebRequest -Uri $archiveUrl -OutFile $archivePath -UseBasicParsing
     Expand-Archive -LiteralPath $archivePath -DestinationPath $extractPath
 
     $archiveRoot = Get-ChildItem -LiteralPath $extractPath -Directory | Select-Object -First 1
