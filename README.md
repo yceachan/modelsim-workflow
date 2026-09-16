@@ -32,6 +32,74 @@ $edaBootstrap = [scriptblock]::Create((irm https://raw.githubusercontent.com/yce
 eda new .\my-rtl-project
 ```
 
+```powershell
+function global:eda {
+    [CmdletBinding()]
+    param(
+        [Parameter(Position = 0)]
+        [string] $Command,
+
+        [Parameter(Position = 1)]
+        [string] $Path,
+
+        [Alias('h', '?')]
+        [switch] $Help
+    )
+
+    function Show-EdaUsage {
+        @'
+Usage:
+  eda new <directory>  Create the ModelSim template in a new or empty directory.
+  eda init             Create the template in the empty current directory.
+  eda --help           Show this help message.
+
+The generated project contains template files only; no Git repository is created.
+'@
+    }
+
+    if ($Help -or [string]::IsNullOrWhiteSpace($Command) -or
+        $Command -in @('help', '--help', '-h', '-?')) {
+        Show-EdaUsage
+        return
+    }
+
+    if ($Command -notin @('new', 'init')) {
+        Show-EdaUsage
+        Write-Error "Unknown command: $Command"
+        return
+    }
+
+    if ($Command -eq 'new' -and [string]::IsNullOrWhiteSpace($Path)) {
+        Show-EdaUsage
+        Write-Error 'The new command requires a destination directory.'
+        return
+    }
+
+    if ($Command -eq 'init' -and $PSBoundParameters.ContainsKey('Path')) {
+        Show-EdaUsage
+        Write-Error 'The init command does not accept a directory. Run it inside an empty directory.'
+        return
+    }
+
+    $bootstrapUrl = 'https://raw.githubusercontent.com/yceachan/modelsim-workflow/main/bootstrap.ps1'
+
+    try {
+        $bootstrapSource = Invoke-RestMethod -Uri $bootstrapUrl
+        $bootstrap = [scriptblock]::Create([string] $bootstrapSource)
+    }
+    catch {
+        throw "Unable to download the ModelSim template bootstrap script: $($_.Exception.Message)"
+    }
+
+    if ($PSBoundParameters.ContainsKey('Path')) {
+        & $bootstrap $Command $Path
+    }
+    else {
+        & $bootstrap $Command
+    }
+}
+```
+
 或者先进入一个空目录：
 
 ```powershell
