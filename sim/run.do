@@ -6,6 +6,7 @@ transcript on
 
 # -----------------------------------------------------------------------------
 # Project settings: edit these when reusing the template.
+# TOP is the top-level design unit/module name (for example: tb), not a source filename.
 # -----------------------------------------------------------------------------
 set TOP       tb
 set RUN_TIME  250ns
