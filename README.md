@@ -42,6 +42,14 @@ eda init
 
 两种命令都只下载并复制模板文件，不会保留模板仓库的 `.git`，也不会执行 `git init`。
 
+查看命令说明：
+
+```powershell
+eda --help
+```
+
+直接执行 `eda`、`eda -h` 或 `eda help` 也会显示同一份 usage。
+
 ## 仿真工作流
 
 首次启动：
